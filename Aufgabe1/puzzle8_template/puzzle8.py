@@ -41,6 +41,8 @@ def main():
     else:
         print(f"Züge: {len(a_star_result) - 1}")
         [print(step) for step in a_star_result]
+        for i, b in enumerate(a_star_result):
+            print_board(b.board, i, len(a_star_result) - 1)
 
     # --- IDFS ---
     print("\n--- IDFS Suche ---")

@@ -35,26 +35,54 @@ class Node:
         Knoten mit kleineren f-Werten werden bevorzugt.
         """
         return self.f < other.f  # Für PriorityQueue
+    
+    def __eq__(self, other):
+        return isinstance(other, Node) and self.board == other.board
 
 
 def reconstruct_path(node: Node) -> deque[Board]:
     """
     Rekonstruiert den Pfad vom Startzustand bis zum Zielzustand.
-    TODO: Implementiere das erstellen des Pfades.
     """
     path = deque()
+    path.append(node.board)
+    current_node = node
+    while(current_node.parent):
+        current_node = current_node.parent
+        path.appendleft(current_node.board)
+
     return path
 
 
 def a_star(start_board: Board) -> Optional[deque[Board]]:
     """
     Führt den A*-Algorithmus zur Lösung des 8-Puzzle-Problems aus.
-    TODO: Implementiere den A*-Algorithmus.
     Es empfiehlt sich hierbei heapq für die open_list und set() für die
     closed_list zu verwenden.
     """
+
     open_list = []
     heapq.heappush(open_list, Node(start_board))
     closed_list = set()
+    
+    while(len(open_list) > 0):
+        current_Node = heapq.heappop(open_list)
+        if current_Node.board.is_solved():
+            return reconstruct_path(current_Node)
+        #Node wurde besucht
+        closed_list.add(current_Node.board)
+        for i, board in enumerate(current_Node.board.possible_actions()):
+            newNode = Node(board, current_Node, (current_Node.g + 1))
+
+            #Falls neuer zustand -> in openList
+            if newNode not in open_list and newNode.board not in closed_list:
+                heapq.heappush(open_list, newNode)
+            
+            #Board wurde schonmal erreicht. Vielleicht war's jetzt aber schneller?
+            elif newNode in open_list:
+                existing_node = next(n for n in open_list if n == newNode)
+                if newNode.f < existing_node.f:
+                    open_list.remove(existing_node)
+                    heapq.heappush(open_list, newNode)
 
     return None  # Kein Pfad gefunden
