@@ -9,6 +9,16 @@ from a_star import a_star
 from idfs import idfs
 from collections import deque
 
+def print_board(board: list[int], step: int, total: int):
+    """Gibt ein einzelnes Board als 3x3 Gitter aus."""
+    print(f"  Schritt {step} / {total}\n")
+    print("  ┌───┬───┬───┐")
+    for row in range(3):
+        cells = board[row * 3 : row * 3 + 3]
+        print("  │ " + " │ ".join(str(c) for c in cells) + " │")
+        if row < 2:
+            print("  ├───┼───┼───┤")
+    print("  └───┴───┴───┘")
 
 def main():
     # Beispiel mit zufälligem lösbaren Board
@@ -16,6 +26,7 @@ def main():
 
     # Beispiel mit festem Board (wie im Aufgabenblatt)
     board = Board([7, 2, 4, 5, 0, 6, 8, 3, 1])
+    #board = Board([1, 2, 0, 3, 4, 5, 6, 7, 8])
 
     print("Startzustand:", board)
     print("Lösbar (Parität)?", board.parity())
@@ -39,6 +50,8 @@ def main():
     else:
         print(f"Züge: {len(idfs_result) - 1}")
         [print(step) for step in idfs_result]
+        for i, b in enumerate(idfs_result):
+            print_board(b.board, i, len(idfs_result) - 1)
 
 
 if __name__ == "__main__":

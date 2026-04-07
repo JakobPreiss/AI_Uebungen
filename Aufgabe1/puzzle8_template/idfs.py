@@ -47,7 +47,6 @@ def idfs(start_board: Board, limit=1000):  # max. Tiefe arbiträr gesetzt
         visited = set()
         result = dfs(start_board, path, depth, visited)
         if result:
-            path.append(result)
             return path
         print("depth: " + str(depth))
     return None
