@@ -12,10 +12,10 @@ from collections import deque
 
 def main():
     # Beispiel mit zufälligem lösbaren Board
-    # board = Board()
+    board = Board()
 
     # Beispiel mit festem Board (wie im Aufgabenblatt)
-    board = Board([7, 2, 4, 5, 0, 6, 8, 3, 1])
+    #board = Board([7, 2, 4, 5, 0, 6, 8, 3, 1])
     #board = Board([0, 1, 4, 2, 6, 7, 8, 3, 5])
 
 

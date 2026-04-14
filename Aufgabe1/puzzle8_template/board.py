@@ -59,18 +59,17 @@ class Board:
         Paritätsprüfung:
         Gibt True zurück, wenn das Board lösbar ist.
         """
-        wrong_pair_count = 0
-        for i, val in enumerate(self.board):
-            if val == 0:
-                continue
-            for j in range(i, -1, -1):
-                if self.board[j] == 0:
-                    continue
-                if val < self.board[j]:
-                    wrong_pair_count += 1
-                    break
-            
-        return wrong_pair_count % 2 == 0
+        
+        parity_num = 0
+        board_array = [x for x in self.board if x != 0]
+
+        for y in range(len(board_array)):
+            for x in range(y + 1, len(board_array)): 
+                if board_array[x] < board_array[y]:
+                    parity_num += 1
+                    # print("(" + str(board_array[x]) + "," + str(board_array[y]) + "), ")
+
+        return parity_num % 2 == 0
 
     def h1(self):
         """

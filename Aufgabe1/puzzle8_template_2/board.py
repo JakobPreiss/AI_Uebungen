@@ -68,7 +68,9 @@ class Board:
             for x in range(y + 1, len(board_array)): 
                 if board_array[x] < board_array[y]:
                     parity_num += 1
-                    # print("(" + str(board_array[x]) + "," + str(board_array[y]) + "), ")
+                    print("(" + str(board_array[x]) + "," + str(board_array[y]) + "), ")
+        
+        print(parity_num)
 
         return parity_num % 2 == 0
 
@@ -139,7 +141,7 @@ def main():
     b = Board([7, 2, 4, 5, 0, 6, 8, 3, 1])  # Startzustand manuell setzen
     # b = Board()  # Lösbares Puzzle zufällig generieren
     #b = Board([0, 1, 4, 2, 6, 7, 8, 3, 5])
-    b = Board([0, 5, 7, 3, 8, 1, 2, 4, 6])
+    # b = Board([0, 5, 7, 3, 8, 1, 2, 4, 6])
 
 
     print("Startzustand:", b)
