@@ -85,5 +85,8 @@ if __name__ == "__main__":
     und monoton ist, also die Kosten der Heuristik die tatsächlichen Kosten nie überschreiten
     und die kosten eines zusätzlichen Zugs immer steigen (in der Heuristik und im Spiel).
     Auch hier muss der Zustandsraum endlich sein.
-    e) Was für ein problem passiert bei 15-Puzzle? TODO
+    e) Bei einem 9-er Puzzle gibt es nur 362880 Zustände.
+    Bei dem 16-er Puzzle gibt es 2.09 * 10^13 Zustände. Selbst wenn
+    jeder Zustand nur 1 Byte bräuchte würde mein ganzer SSD Speicher nicht
+    für alle Zustände ausreichen. 
     """
