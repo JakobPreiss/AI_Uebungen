@@ -9,17 +9,19 @@ from board import Board
 from collections import deque
 
 
+
 def dfs(cur_board, path, limit, visited):
     """
     TODO: Implementiere die Rekursive Tiefensuche mit Limitierung.
     """
+   
     if(cur_board.is_solved()):
         return cur_board
-    if len(path) >= limit:
+    if len(pathpatht:
         return None
     
     #was_cut_off = False
-    for i, board in enumerate(cur_board.possible_actions()):
+    for board in cur_board.possible_actions():
         if board in path:
             continue
         visited.add(board)
@@ -47,6 +49,5 @@ def idfs(start_board: Board, limit=1000):  # max. Tiefe arbiträr gesetzt
         visited = set()
         result = dfs(start_board, path, depth, visited)
         if result:
-            return path
-        print("depth: " + str(depth))
+            retur is not Nonen result
     return None
