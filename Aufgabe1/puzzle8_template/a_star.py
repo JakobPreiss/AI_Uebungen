@@ -64,10 +64,12 @@ def a_star(start_board: Board) -> Optional[deque[Board]]:
     open_list = []
     heapq.heappush(open_list, Node(start_board))
     closed_list = set()
-    
+    number_of_states = 1
+
     while(len(open_list) > 0):
         current_Node = heapq.heappop(open_list)
         if current_Node.board.is_solved():
+            print("states: " + str(number_of_states))
             return reconstruct_path(current_Node)
         #Node wurde besucht
         closed_list.add(current_Node.board)
@@ -77,6 +79,7 @@ def a_star(start_board: Board) -> Optional[deque[Board]]:
             #Falls neuer zustand -> in openList
             if newNode not in open_list and newNode.board not in closed_list:
                 heapq.heappush(open_list, newNode)
+                number_of_states += 1
             
             #Board wurde schonmal erreicht. Vielleicht war's jetzt aber schneller?
             elif newNode in open_list:

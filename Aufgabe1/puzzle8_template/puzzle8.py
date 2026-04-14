@@ -30,6 +30,8 @@ def main():
 
     print("Startzustand:", board)
     print("Lösbar (Parität)?", board.parity())
+    if not board.parity():
+        return
     print("Heuristik h1:", board.h1())
     print("Heuristik h2:", board.h2())
 
@@ -58,3 +60,30 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+    """
+    A1:
+    a) Parität 6
+    b) siehe board.py parity()
+
+    A2:
+    a) siehe board.py h1()
+    b) siehe board.py h2()
+    c) siehe board.py h2()
+    d) siehe board.py h1() und h2()
+
+    A3:
+    a) siehe idfs.py und a_star.py
+    b) Funktioniert? Bei ungerader Parität ist es halt nicht lösbar
+    c) siehe Ausgabe
+    d) Tiefensuche ist optimal, da wir iterativ vertiefen und jeder Zug die gleichen
+    Kosten hat. Da wir immer erst alle Züge mit derselben Tiefe ausprobieren, probieren wir alle Züge mit
+    den niedrigsten Kosten aus, bis wir zu zügen mit höheren Kosten gehen. Dafür muss der 
+    Zustandsraum endlich sein.
+    A* ist optimal, da die Heuristik die Vorraussetzung h(n)<= h*(n) erfüllt
+    und monoton ist, also die Kosten der Heuristik die tatsächlichen Kosten nie überschreiten
+    und die kosten eines zusätzlichen Zugs immer steigen (in der Heuristik und im Spiel).
+    Auch hier muss der Zustandsraum endlich sein.
+    e) Was für ein problem passiert bei 15-Puzzle? TODO
+    """
