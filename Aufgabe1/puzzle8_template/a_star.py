@@ -38,6 +38,9 @@ class Node:
     
     def __eq__(self, other):
         return isinstance(other, Node) and self.board == other.board
+    
+    def __hash__(self):
+        return self.board.__hash__()
 
 
 def reconstruct_path(node: Node) -> deque[Board]:
@@ -72,6 +75,8 @@ def a_star(start_board: Board) -> Optional[deque[Board]]:
             print("states: " + str(number_of_states))
             return reconstruct_path(current_Node)
         #Node wurde besucht
+        if current_Node in closed_list:
+            continue
         closed_list.add(current_Node.board)
         for i, board in enumerate(current_Node.board.possible_actions()):
             newNode = Node(board, current_Node, (current_Node.g + 1))

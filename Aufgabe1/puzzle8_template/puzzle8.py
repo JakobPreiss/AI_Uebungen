@@ -22,10 +22,10 @@ def print_board(board: list[int], step: int, total: int):
 
 def main():
     # Beispiel mit zufälligem lösbaren Board
-    # board = Board()
+    board = Board()
 
     # Beispiel mit festem Board (wie im Aufgabenblatt)
-    board = Board([7, 2, 4, 5, 0, 6, 8, 3, 1])
+    #board = Board([7, 2, 4, 5, 0, 6, 8, 3, 1])
     #board = Board([1, 2, 0, 3, 4, 5, 6, 7, 8])
 
     print("Startzustand:", board)
@@ -84,7 +84,6 @@ if __name__ == "__main__":
     A* ist optimal, da die Heuristik die Vorraussetzung h(n)<= h*(n) erfüllt
     und monoton ist, also die Kosten der Heuristik die tatsächlichen Kosten nie überschreiten
     und die kosten eines zusätzlichen Zugs immer steigen (in der Heuristik und im Spiel).
-    Auch hier muss der Zustandsraum endlich sein.
     e) Bei einem 9-er Puzzle gibt es nur 362880 Zustände.
     Bei dem 16-er Puzzle gibt es 2.09 * 10^13 Zustände. Selbst wenn
     jeder Zustand nur 1 Byte bräuchte würde mein ganzer SSD Speicher nicht

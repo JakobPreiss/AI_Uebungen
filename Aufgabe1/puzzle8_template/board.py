@@ -68,8 +68,8 @@ class Board:
                     continue
                 if val < self.board[j]:
                     wrong_pair_count += 1
-                    break
             
+        print("wrong_pair_count: " + str(wrong_pair_count))
         return wrong_pair_count % 2 == 0
 
     def h1(self):
