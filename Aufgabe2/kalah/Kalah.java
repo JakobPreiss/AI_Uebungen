@@ -37,10 +37,10 @@ public class Kalah {
      */
     public static void main(String[] args) {
         //testExample();
-        //testHHGame();
+        testHHGame();
         //testMiniMaxAndAlphaBetaWithGivenBoard(12);
-        testHumanMiniMax('A', 8);
-        testHumanMiniMaxAndAlphaBeta('A', 12, false);
+        //testHumanMiniMax('A', 8);
+        //testHumanMiniMaxAndAlphaBeta('A', 12, false);
     }
 
     private record Modus(Character humanPlayer, int searchDepth, boolean withAlphaBeta, boolean withOrdering) {}
