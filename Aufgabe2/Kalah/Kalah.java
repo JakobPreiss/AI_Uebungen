@@ -70,7 +70,7 @@ public class Kalah {
         int bestScore = Integer.MIN_VALUE;
 
         for (KalahBoard child : state.possibleActions()) {
-            int score = minimax(child, depth - 1, state.getCurPlayer() == 'A'); // false = minimizing (B)
+            int score = minimaxWithoutCount(child, depth - 1, state.getCurPlayer() == 'A'); // false = minimizing (B)
             if (score > bestScore) {
                 bestScore = score;
                 bestMove = child.getLastPlay();
@@ -281,52 +281,84 @@ public class Kalah {
     }
 
     public static void testHumanMiniMax() {
-        KalahBoard kalahBd = new KalahBoard();
-
-        // A hat viele Steine auf eigener Seite, B wenig
-        //KalahBoard kalahBd = new KalahBoard(new int[]{4, 4, 4, 4, 4, 4, 0, 1, 0, 1, 0, 1, 0, 0}, 'A');
-
-// A bereits im Kalah-Vorteil
-        //KalahBoard kalahBd = new KalahBoard(new int[]{3, 3, 3, 3, 3, 3, 6, 1, 1, 1, 1, 1, 1, 0}, 'A');
-
-// A kann sofort Bonuszug erzwingen (Pit 0 hat 6 Steine → landet auf Kalah)
-        //KalahBoard kalahBd = new KalahBoard(new int[]{6, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 0}, 'A');
-
-// Gegeben aus der Aufgabe (A gewinnt mit 8 Bonuszügen)
-        // KalahBoard kalahBd= new KalahBoard(new int[]{2, 0, 4, 3, 2, 0, 0, 1, 0, 1, 3, 2, 1, 0}, 'A');
+        //KalahBoard kalahBd = new KalahBoard();
+        KalahBoard kalahBd = new KalahBoard(new int[]{2, 0, 4, 3, 2, 0, 0, 1, 0, 1, 3, 2, 1, 0}, 'A');
 
         kalahBd.print();
+
+        long time = System.currentTimeMillis();
+        int currdepth = 6;
 
         while (!kalahBd.isFinished()) {
             int action;
             if(kalahBd.getCurPlayer() == 'A') {
-                action = bestAction(kalahBd, 6);
-                bestActionWithAlphaBeta(kalahBd, 6);
-                bestActionWithAlphaBetaAddHeuristic(kalahBd, 6);
+                //action = kalahBd.readAction();
+                //action = bestAction(kalahBd, currdepth);
+                //action = bestActionWithAlphaBeta(kalahBd, currdepth);
+                action = bestActionWithAlphaBetaAddHeuristic(kalahBd, currdepth);
+                System.out.println("A spielt Mulde: " + action + "\n");
+
             } else {
                 //action = kalahBd.readAction();
                 //action = bestAction(kalahBd, 6);
                 //action = bestActionWithAlphaBeta(kalahBd, 6);
-                action = bestActionWithoutCount(kalahBd, 6);
+                //action = bestActionWithoutCount(kalahBd, currdepth);
+                action = bestActionWithAlphaBetaAddHeuristic(kalahBd, currdepth);
+                System.out.println("B spielt Mulde: " + action + "\n");
+
             }
             kalahBd.move(action);
             kalahBd.print();
         }
 
+        //keep B depth low at 1 (about 8 ms)
+
+        long time2 = System.currentTimeMillis();
+        System.out.println("Time at depth of " + currdepth + ": " + (time2 - time) + " ms\n");
+
+/*
+        System.out.println("depth " + currdepth + ": " + (time2 - time) + " ms; " +
+                "Häufigkeit = " + hauefigkeit_minimax +
+                "; Aufrufe = " + avg_zuege_minimax +
+                "; Durchschnitt: " + avg_zuege_minimax / (hauefigkeit_minimax == 0 ? 1 : hauefigkeit_minimax) + "\n");
+
+        System.out.println("depth " + currdepth + ": " + (time2 - time) + " ms; " +
+                "Häufigkeit = " + hauefigkeit_minimax_alpha_beta +
+                "; Aufrufe = " + avg_zuege_minimax_alpha_beta +
+                "; Durchschnitt: " + avg_zuege_minimax_alpha_beta / (hauefigkeit_minimax_alpha_beta == 0 ? 1 : hauefigkeit_minimax_alpha_beta) + "\n");
+
+        System.out.println("depth: " + currdepth + ": " + (time2 - time) + " ms; " +
+                "Häufigkeit = " + hauefigkeit_minimax_alpha_beta_heuristic +
+                "; Aufrufe = " + avg_zuege_minimax_alpha_beta_heuristic +
+                "; Durchschnitt: " + avg_zuege_minimax_alpha_beta_heuristic / (hauefigkeit_minimax_alpha_beta_heuristic == 0 ? 1 : hauefigkeit_minimax_alpha_beta_heuristic) + "\n");
+*/
+
+        //depth 6: 208 ms; Häufigkeit = 109; Aufrufe: 97564; Durchschnitt: 895
+        //depth 8: 1204 ms; Häufigkeit = 146; Aufrufe = 2361098; Durchschnitt: 16171
+        //depth 10: 25718 ms; Häufigkeit = 133; Aufrufe = 52497795; Durchschnitt: 394720
+        //depth 12: 526228 ms; Häufigkeit = 127; Aufrufe = 1148255820; Durchschnitt: 9041384
         System.out.println("Minimax:");
         System.out.println("Hauefigkeit: " + hauefigkeit_minimax);
         System.out.println("Aufrufe: " + avg_zuege_minimax);
-        System.out.println("Durchschnitt: " + avg_zuege_minimax / hauefigkeit_minimax + "\n");
+        System.out.println("Durchschnitt: " + avg_zuege_minimax / (hauefigkeit_minimax == 0 ? 1 : hauefigkeit_minimax) + "\n");
 
+        //depth 6: 24 ms; Häufigkeit = 56; Aufrufe = 4677; Durchschnitt: 83
+        //depth 8: 117 ms; Häufigkeit = 160; Aufrufe = 158334; Durchschnitt: 989
+        //depth 10: 514 ms; Häufigkeit = 144; Aufrufe = 1326232; Durchschnitt: 9209
+        //depth 12: 2265 ms; Häufigkeit = 104; Aufrufe = 7953326; Durchschnitt: 76474
         System.out.println("Minimax mit Alpha Beta:");
         System.out.println("Hauefigkeit: " + hauefigkeit_minimax_alpha_beta);
         System.out.println("Aufrufe: " + avg_zuege_minimax_alpha_beta);
-        System.out.println("Durchschnitt: " + avg_zuege_minimax_alpha_beta / hauefigkeit_minimax_alpha_beta + "\n");
+        System.out.println("Durchschnitt: " + avg_zuege_minimax_alpha_beta / (hauefigkeit_minimax_alpha_beta == 0 ? 1 : hauefigkeit_minimax_alpha_beta)  + "\n");
 
+        //depth: 6: 33 ms; Häufigkeit = 56; Aufrufe = 3679; Durchschnitt: 65
+        //depth: 8: 144 ms; Häufigkeit = 160; Aufrufe = 95436; Durchschnitt: 596
+        //depth: 10: 844 ms; Häufigkeit = 144; Aufrufe = 600717; Durchschnitt: 4171
+        //depth: 12: 3590 ms; Häufigkeit = 104; Aufrufe = 3775330; Durchschnitt: 36301
         System.out.println("Minimax mit Alpha Beta + Heuristic:");
         System.out.println("Hauefigkeit: " + hauefigkeit_minimax_alpha_beta_heuristic);
         System.out.println("Aufrufe: " + avg_zuege_minimax_alpha_beta_heuristic);
-        System.out.println("Durchschnitt: " + avg_zuege_minimax_alpha_beta_heuristic / hauefigkeit_minimax_alpha_beta_heuristic +"\n");
+        System.out.println("Durchschnitt: " + avg_zuege_minimax_alpha_beta_heuristic / (hauefigkeit_minimax_alpha_beta_heuristic == 0 ? 1 : hauefigkeit_minimax_alpha_beta_heuristic) +"\n");
 
         if(kalahBd.getAKalah() > kalahBd.getBKalah()) {
             System.out.println("\n" + ANSI_BLUE + "GAME OVER" + "\n" + ANSI_BLUE + "A hat gewonnen!");
